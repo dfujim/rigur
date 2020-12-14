@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="rigur",
-    version="0.0.1",
+    version="0.0.2",
     author="Derek Fujimoto",
     author_email="fujimoto@phas.ubc.ca",
     description="Rip data from images of figures",
