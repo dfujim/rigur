@@ -135,6 +135,7 @@ class rigur(object):
         canvas.draw()
         canvas.get_tk_widget().grid(column=0, row=0, padx=5, pady=5, sticky='nsew')
         canvas.mpl_connect('button_press_event', self.get_data)
+        canvas.mpl_connect('motion_notify_event', self.draw_crosshairs)
         
         # toolbar
         toolbar_frame = ttk.Frame(left_frame)
@@ -253,6 +254,20 @@ class rigur(object):
             self.set_lines()
             self.button_scale['text'] = 'Scale Axes'
         
+    # ======================================================================= #
+    def draw_crosshairs(self, event):
+        """
+            Draw crosshairs on figure
+        """
+        
+        if event.inaxes:
+            try:
+                self.crossx.set_xdata(event.xdata)
+                self.crossy.set_ydata(event.ydata)
+                self.fig.canvas.draw_idle()
+            except AttributeError:
+                pass
+            
     # ======================================================================= #
     def export_data(self):
         """
@@ -388,7 +403,6 @@ class rigur(object):
         self.yh_img.set('')
         self.yl_img.set('')
         self.set_lines()
-        
         
         # clear data
         self.clear_data()
@@ -543,6 +557,10 @@ class rigur(object):
         # hide lines and points
         del self.drag_pts
         self.ax.lines = []
+        
+        # draw crosshairs
+        self.crossx = self.ax.axvline(0.5, color='r', ls=':', lw=1)
+        self.crossy = self.ax.axhline(0.5, color='r', ls=':', lw=1)
         
         # disconnect axis update
         self.ax.callbacks.disconnect('xlim_changed')
