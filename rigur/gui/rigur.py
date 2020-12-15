@@ -558,10 +558,6 @@ class rigur(object):
         del self.drag_pts
         self.ax.lines = []
         
-        # draw crosshairs
-        self.crossx = self.ax.axvline(0.5, color='r', ls=':', lw=1)
-        self.crossy = self.ax.axhline(0.5, color='r', ls=':', lw=1)
-        
         # disconnect axis update
         self.ax.callbacks.disconnect('xlim_changed')
         self.ax.callbacks.disconnect('ylim_changed')
@@ -579,6 +575,10 @@ class rigur(object):
         self.yh_pix = ytransform(self.yh_pix)
         self.x_slider_for_y = xtransform(self.x_slider_for_y)
         self.y_slider_for_x = ytransform(self.y_slider_for_x)
+        
+        # draw crosshairs
+        self.crossx = self.ax.axvline(np.mean(xlim), color='r', ls=':', lw=1)
+        self.crossy = self.ax.axhline(np.mean(ylim), color='r', ls=':', lw=1)
         
         # scale data
         self.xdata = list(xtransform(np.array(self.xdata)))
