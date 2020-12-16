@@ -15,6 +15,7 @@ import matplotlib.image as mpimg
 
 from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, NavigationToolbar2Tk)
 from matplotlib.figure import Figure
+from matplotlib.widgets import Cursor
 
 import numpy as np
 import pandas as pd
@@ -31,6 +32,7 @@ class rigur(object):
         ax:             mpl.Axes of fig
         
         button_scale:   tk.Button for scaling image
+        cursor:         mpl.Cursor crosshairs
         
         data:           list of xy data points in linear scaling
         data_line:      mpl.Line, line with data points based on click
@@ -135,7 +137,6 @@ class rigur(object):
         canvas.draw()
         canvas.get_tk_widget().grid(column=0, row=0, padx=5, pady=5, sticky='nsew')
         canvas.mpl_connect('button_press_event', self.get_data)
-        canvas.mpl_connect('motion_notify_event', self.draw_crosshairs)
         
         # toolbar
         toolbar_frame = ttk.Frame(left_frame)
@@ -360,6 +361,7 @@ class rigur(object):
             self.ax = self.fig.add_subplot(111)
             self.toolbar.ax = self.ax
             self.toolbar.fig = self.fig
+            self.cursor = Cursor(self.ax, useblit=True, color='red', linewidth=1, ls=':')
         else:
             self.ax.clear()
             
@@ -575,10 +577,6 @@ class rigur(object):
         self.yh_pix = ytransform(self.yh_pix)
         self.x_slider_for_y = xtransform(self.x_slider_for_y)
         self.y_slider_for_x = ytransform(self.y_slider_for_x)
-        
-        # draw crosshairs
-        self.crossx = self.ax.axvline(np.mean(xlim), color='r', ls=':', lw=1)
-        self.crossy = self.ax.axhline(np.mean(ylim), color='r', ls=':', lw=1)
         
         # scale data
         self.xdata = list(xtransform(np.array(self.xdata)))
