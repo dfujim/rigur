@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="rigur",
-    version="0.0.3",
+    version="0.0.4",
     author="Derek Fujimoto",
     author_email="fujimoto@phas.ubc.ca",
     description="Rip data from images of figures",
@@ -23,5 +23,5 @@ setuptools.setup(
     install_requires=['numpy>=1.19','matplotlib>=3.2.2','pandas>=1.0.5'],
     # ~ package_data={'': ['./images']},
     entry_points={'console_scripts':['rigur = rigur:main']},
-    # ~ include_package_data=True,
+    include_package_data=True,
 )
