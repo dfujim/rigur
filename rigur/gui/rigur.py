@@ -426,12 +426,12 @@ class rigur(object):
             Do matplotlib actions on key release
         """
                 
-        if event.char in 'oph':
-            if event.char == 'o':               self.toolbar.zoom()
-            elif event.char == 'p':             self.toolbar.pan()
-            elif event.char == 'h':             self.toolbar.home()
-            elif str(event.keysym) == 'Right':  self.toolbar.forward()
-            elif str(event.keysym) == 'Left':   self.toolbar.back()
+        if event.keysym in 'oph':
+            if event.keysym == 'o':               self.toolbar.zoom()
+            elif event.keysym == 'p':             self.toolbar.pan()
+            elif event.keysym == 'h':             self.toolbar.home()
+            elif event.keysym == 'Right':  self.toolbar.forward()
+            elif event.keysym == 'Left':   self.toolbar.back()
             self.fig.canvas.draw_idle()
         
             # don't type in boxes
